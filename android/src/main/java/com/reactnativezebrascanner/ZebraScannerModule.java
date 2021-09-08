@@ -10,7 +10,6 @@ import com.facebook.react.module.annotations.ReactModule;
 
 import com.zebra.scannercontrol.SDKHandler;
 
-
 @ReactModule(name = ZebraScannerModule.NAME)
 public class ZebraScannerModule extends ReactContextBaseJavaModule {
     public static final String NAME = "ZebraScanner";
@@ -29,7 +28,6 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule {
     public String getName() {
         return NAME;
     }
-
 
     // Example method
     // See https://reactnative.dev/docs/native-modules-android
