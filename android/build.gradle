@@ -21,7 +21,7 @@ android {
     compileSdkVersion safeExtGet('ZebraScanner_compileSdkVersion', 29)
     buildToolsVersion safeExtGet('ZebraScanner_buildToolsVersion', '29.0.2')
     defaultConfig {
-        minSdkVersion safeExtGet('ZebraScanner_minSdkVersion', 16)
+        minSdkVersion safeExtGet('ZebraScanner_minSdkVersion', 19)
         targetSdkVersion safeExtGet('ZebraScanner_targetSdkVersion', 29)
         versionCode 1
         versionName "1.0"
@@ -55,4 +55,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation files("libs/barcode_scanner_library_v2.6.4.0-release.aar")
 }
