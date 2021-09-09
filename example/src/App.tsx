@@ -1,21 +1,6 @@
-import * as React from 'react';
-
-import { StyleSheet, View, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import ZebraScanner from 'react-native-zebra-scanner';
-
-export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    ZebraScanner.multiply(3, 7).then(setResult);
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -23,9 +8,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  button: {
+    justifyContent: 'center',
+    borderRadius: 5,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    height: 40,
+    paddingRight: 10,
+    paddingLeft: 10,
+    width: 180,
+    marginRight: 10,
+  },
+  buttonLabel: {
+    fontSize: 18,
+    textAlign: 'center',
   },
 });
+
+const getScanners = async () => {
+  const res = await ZebraScanner.getScanners();
+  console.log(res);
+};
+
+const App = () => {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={getScanners}>
+        <View style={styles.button}>
+          <Text style={styles.buttonLabel}>Disable Scanners</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default App;
