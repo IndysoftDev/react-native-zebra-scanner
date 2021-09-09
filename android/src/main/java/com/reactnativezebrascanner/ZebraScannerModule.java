@@ -101,7 +101,7 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule
 
             ArrayList<DCSScannerInfo> devices = new ArrayList<>();
             sdkHandler.dcssdkGetAvailableScannersList(devices);
-            final WritableArray payload = new WritableArray();
+            final WritableArray payload = Arguments.createArray();
             for (DCSScannerInfo device : devices) {
                 payload.pushMap(toScannerDeviceMap(device));
             }
