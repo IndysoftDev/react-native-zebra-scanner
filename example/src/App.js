@@ -18,12 +18,28 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     width: 180,
     marginRight: 10,
+    marginVertical: 20,
   },
   buttonLabel: {
     fontSize: 18,
     textAlign: 'center',
   },
 });
+
+const Scanner = ({ scanner }) => {
+  const connect = async () => {
+    const res = await ZebraScanner.connect(scanner.name);
+    console.log(res);
+  };
+
+  return (
+    <TouchableOpacity onPress={connect}>
+      <View style={styles.button}>
+        <Text style={styles.buttonLabel}>{scanner.name}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const App = () => {
   const [scanners, setScanners] = React.useState([]);
@@ -45,11 +61,7 @@ const App = () => {
         </View>
       </TouchableOpacity>
       {scanners.map((scanner) => {
-        return (
-          <TouchableOpacity onPress={getScanners} key={scanner.name}>
-            <Text style={styles.buttonLabel}>{scanner.name}</Text>
-          </TouchableOpacity>
-        );
+        return <Scanner scanner={scanner} key={scanner.name} />;
       })}
     </View>
   );
