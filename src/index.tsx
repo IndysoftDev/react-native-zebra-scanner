@@ -1,9 +1,16 @@
 import { NativeModules } from 'react-native';
 
-type ZebraScannerType = {
-  multiply(a: number, b: number): Promise<number>;
-};
-
 const { ZebraScanner } = NativeModules;
 
-export default ZebraScanner as ZebraScannerType;
+type getScanners = () => Promise<any>;
+
+type connect = (scannerName: string) => Promise<any>;
+
+const getScanners: getScanners = () => ZebraScanner.getScanners();
+
+const connect: connect = (scannerName) => ZebraScanner.connect(scannerName);
+
+export default {
+  getScanners,
+  connect,
+};
