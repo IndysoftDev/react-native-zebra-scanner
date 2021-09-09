@@ -25,12 +25,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const getScanners = async () => {
-  const res = await ZebraScanner.getScanners();
-  console.log(res);
-};
-
 const App = () => {
+  const [scanners, setScanners] = React.useState([]);
+
+  const getScanners = async () => {
+    try {
+      const res = await ZebraScanner.getScanners();
+      setScanners(res);
+    } catch {
+      setScanners([]);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={getScanners}>
@@ -38,6 +44,13 @@ const App = () => {
           <Text style={styles.buttonLabel}>Disable Scanners</Text>
         </View>
       </TouchableOpacity>
+      {scanners.map((scanner) => {
+        return (
+          <TouchableOpacity onPress={getScanners} key={scanner.name}>
+            <Text style={styles.buttonLabel}>{scanner.name}</Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };
