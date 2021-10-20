@@ -6,26 +6,30 @@ const evtEmitter = new NativeEventEmitter(ZebraScanner);
 
 type getScanners = () => Promise<any>;
 
+type getActiveScanner = () => Promise<any>;
+
 type initReader = (scannerName: string) => Promise<any>;
 
 type addListener = (cb: (args: any[]) => void) => void;
 
-type removeListener = (cb: (args: any[]) => void) => void;
+const getAvailableScanners: getScanners = () =>
+  ZebraScanner.getAvailableScanners();
 
-const getScanners: getScanners = () => ZebraScanner.getScanners();
+const getActiveScanners: getScanners = () => ZebraScanner.getActiveScanners();
 
 const initReader: initReader = (scannerName) =>
   ZebraScanner.connect(scannerName);
 
+const getActiveScanner: getActiveScanner = () =>
+  ZebraScanner.getActiveScanner();
+
 const addBarcodeListener: addListener = (listener) =>
   evtEmitter.addListener('BARCODE', listener);
 
-const removeBarcodeListener: removeListener = (listener) =>
-  evtEmitter.removeListener('BARCODE', listener);
-
 export default {
-  getScanners,
+  getAvailableScanners,
+  getActiveScanners,
   initReader,
   addBarcodeListener,
-  removeBarcodeListener,
+  getActiveScanner,
 };
