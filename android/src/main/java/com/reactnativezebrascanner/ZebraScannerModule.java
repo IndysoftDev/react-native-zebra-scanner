@@ -86,14 +86,23 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule
             }
 
             doConnect();
-            promise.resolve(true);
+            promise.resolve(scanner != null && scanner.isActive());
         } catch (Exception ex) {
             promise.reject(ex);
         }
     }
 
     @ReactMethod
-    public void getScanners(Promise promise) {
+    public void getActiveScanner(Promise promise) {
+        if (scanner != null && scanner.isActive()) {
+            promise.resolve(toScannerDeviceMap(scanner));
+        } else {
+            promise.resolve(false);
+        }
+    }
+
+    @ReactMethod
+    public void getAvailableScanners(Promise promise) {
         try {
             if (sdkHandler == null) {
                 init();
@@ -112,10 +121,31 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule
         }
     }
 
+    @ReactMethod
+    public void getActiveScanners(Promise promise) {
+        try {
+            if (sdkHandler == null) {
+                init();
+            }
+
+            ArrayList<DCSScannerInfo> devices = new ArrayList<>();
+            sdkHandler.dcssdkGetActiveScannersList(devices);
+            final WritableArray payload = Arguments.createArray();
+            for (DCSScannerInfo device : devices) {
+                payload.pushMap(toScannerDeviceMap(device));
+            }
+
+            promise.resolve(payload);
+        } catch (Exception ex) {
+            promise.reject(ex);
+        }
+    }
+
     private WritableMap toScannerDeviceMap(final DCSScannerInfo scanner) {
         final WritableMap device = Arguments.createMap();
         device.putString("name", scanner.getScannerName());
         device.putString("address", scanner.getScannerHWSerialNumber());
+        device.putString("model", scanner.getScannerModel());
         return device;
     }
 
