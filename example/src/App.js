@@ -28,7 +28,9 @@ const styles = StyleSheet.create({
 
 const Scanner = ({ scanner }) => {
   const connect = async () => {
-    const res = await ZebraScanner.connect(scanner.name);
+    const res = await ZebraScanner.initReader(scanner.name);
+    const res2 = await ZebraScanner.getActiveScanner();
+    console.log(res2);
     console.log(res);
   };
 
@@ -44,22 +46,26 @@ const Scanner = ({ scanner }) => {
 const App = () => {
   const [scanners, setScanners] = React.useState([]);
 
-  const getScanners = async () => {
-    try {
-      const res = await ZebraScanner.getScanners();
-      setScanners(res);
-    } catch {
-      setScanners([]);
-    }
-  };
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const res = await ZebraScanner.getAvailableScanners();
+      
+        setScanners(res);
+      } catch {
+        setScanners([]);
+      }
+    })();
+  }, []);
+
+  React.useEffect(() => {
+    const listener = ZebraScanner.addBarcodeListener((bc) => console.log(bc));
+
+    return () => listener.remove();
+  }, []);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={getScanners}>
-        <View style={styles.button}>
-          <Text style={styles.buttonLabel}>Disable Scanners</Text>
-        </View>
-      </TouchableOpacity>
       {scanners.map((scanner) => {
         return <Scanner scanner={scanner} key={scanner.name} />;
       })}
