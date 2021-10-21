@@ -93,6 +93,16 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule
     }
 
     @ReactMethod
+    public void disconnect(Promise promise) {
+        try {
+            doDisconnect();
+            promise.resolve(scanner == null);
+        } catch (Exception ex) {
+            promise.reject(ex);
+        }
+    }
+
+    @ReactMethod
     public void getActiveScanner(Promise promise) {
         if (scanner != null && scanner.isActive()) {
             promise.resolve(toScannerDeviceMap(scanner));
@@ -276,7 +286,7 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule
             sdkHandler.dcssdkUnsubsribeForEvents(notifications_mask);
             DCSSDKDefs.DCSSDK_RESULT result = DCSSDKDefs.DCSSDK_RESULT.DCSSDK_RESULT_FAILURE;
             result = sdkHandler.dcssdkTerminateCommunicationSession(scanner.getScannerID());
-
+            scanner = null;
             Log.d(LOG, result.name());
         }
     }

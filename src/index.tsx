@@ -10,6 +10,8 @@ type getActiveScanner = () => Promise<any>;
 
 type initReader = (scannerName: string) => Promise<any>;
 
+type deinitReader = () => Promise<any>;
+
 type addListener = (cb: (args: any[]) => void) => void;
 
 type isActiveReader = (scannerName: string) => Promise<boolean>;
@@ -21,6 +23,8 @@ const getActiveScanners: getScanners = () => ZebraScanner.getActiveScanners();
 
 const initReader: initReader = (scannerName) =>
   ZebraScanner.connect(scannerName);
+
+const deinitReader: deinitReader = () => ZebraScanner.disconnect();
 
 const getActiveScanner: getActiveScanner = () =>
   ZebraScanner.getActiveScanner();
