@@ -34,6 +34,7 @@ const addBarcodeListener: addListener = (listener) =>
 export default {
   getAvailableScanners,
   getActiveScanners,
+  isActiveReader,
   initReader,
   addBarcodeListener,
   getActiveScanner,
