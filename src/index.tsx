@@ -12,6 +12,8 @@ type initReader = (scannerName: string) => Promise<any>;
 
 type addListener = (cb: (args: any[]) => void) => void;
 
+type isActiveReader = (scannerName: string) => Promise<boolean>;
+
 const getAvailableScanners: getScanners = () =>
   ZebraScanner.getAvailableScanners();
 
@@ -22,6 +24,9 @@ const initReader: initReader = (scannerName) =>
 
 const getActiveScanner: getActiveScanner = () =>
   ZebraScanner.getActiveScanner();
+
+const isActiveReader: isActiveReader = (scannerName) =>
+  ZebraScanner.isActiveScanner(scannerName);
 
 const addBarcodeListener: addListener = (listener) =>
   evtEmitter.addListener('BARCODE', listener);
