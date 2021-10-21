@@ -103,7 +103,7 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule
 
     @ReactMethod
     public void isActiveScanner(String scannerName, Promise promise) {
-        if (scanner != null && item.getScannerName().equals(scannerName) && scanner.isActive()) {
+        if (scanner != null && scanner.getScannerName().equals(scannerName) && scanner.isActive()) {
             promise.resolve(true);
         } else {
             promise.resolve(false);
