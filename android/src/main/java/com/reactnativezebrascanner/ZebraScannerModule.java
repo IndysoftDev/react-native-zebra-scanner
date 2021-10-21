@@ -165,6 +165,7 @@ public class ZebraScannerModule extends ReactContextBaseJavaModule
         device.putString("name", scanner.getScannerName());
         device.putString("address", scanner.getScannerHWSerialNumber());
         device.putString("model", scanner.getScannerModel());
+        device.putBoolean("isActive", scanner.isActive());
         return device;
     }
 
