@@ -55,5 +55,5 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation files("libs/barcode_scanner_library_v2.6.4.0-release.aar")
+    implementation fileTree(dir: "libs", include: ["*.aar"])
 }
