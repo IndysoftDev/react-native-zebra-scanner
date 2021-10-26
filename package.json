@@ -1,6 +1,6 @@
 {
   "name": "react-native-zebra-scanner",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Zebra SDK wrapper for Android and iOS",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
